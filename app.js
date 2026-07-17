@@ -372,12 +372,6 @@ function setupEventListeners() {
     isPlaying = false;
     btnPlayPause.innerHTML = '<i class="fa-solid fa-play"></i>';
     btnPlayPause.classList.remove('active');
-    
-    // Reset voice sample buttons in sidebar
-    document.querySelectorAll('.voice-sample-btn').forEach(b => {
-      b.querySelector('i').className = 'fa-solid fa-play';
-      b.classList.remove('playing');
-    });
   });
 
   audioPlayer.addEventListener('ended', () => {
@@ -439,43 +433,6 @@ function setupEventListeners() {
   btnSidebar.addEventListener('click', openSidebar);
   btnCloseSidebar.addEventListener('click', closeSidebar);
   sidebarOverlay.addEventListener('click', closeSidebar);
-  
-  // Voice Sample Buttons Playback Handler
-  const sampleBtns = document.querySelectorAll('.voice-sample-btn');
-  sampleBtns.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const voiceId = btn.dataset.voice;
-      const targetSrc = `sample_${voiceId}.mp3`;
-      const absoluteTarget = new URL(targetSrc, window.location.href).href;
-      
-      // If already playing this, pause it
-      if (audioPlayer.src === absoluteTarget && !audioPlayer.paused) {
-        audioPlayer.pause();
-        return;
-      }
-      
-      // Reset active icons for all sample buttons
-      sampleBtns.forEach(b => {
-        b.querySelector('i').className = 'fa-solid fa-play';
-        b.classList.remove('playing');
-      });
-      
-      // Load the selected sample voice
-      audioPlayer.src = targetSrc;
-      audioPlayer.load();
-      
-      // Play and update UI
-      audioPlayer.play()
-        .then(() => {
-          btn.querySelector('i').className = 'fa-solid fa-square-stop';
-          btn.classList.add('playing');
-        })
-        .catch(err => {
-          console.warn("Could not play sample:", err);
-        });
-    });
-  });
   
   // Dynamic Voice Switching in Player
   const btnVoiceSwitch = document.getElementById('btn-voice-switch');
