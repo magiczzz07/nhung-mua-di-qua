@@ -341,7 +341,7 @@ html {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 24px;
-  padding: 12px 16px;
+  padding: 10px 16px;
   border-bottom: 1px dashed var(--border-glass);
   position: sticky;
   top: -16px;
@@ -350,6 +350,42 @@ html {
   margin-left: -16px;
   margin-right: -16px;
   transition: background-color 0.4s ease;
+}
+
+.header-center-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.font-size-adjuster {
+  display: flex;
+  gap: 4px;
+  background-color: rgba(255, 255, 255, 0.03);
+  padding: 2px 4px;
+  border-radius: 12px;
+  border: 1px solid var(--border-glass);
+}
+
+.font-size-adjuster button {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.65rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  transition: all 0.2s ease;
+}
+
+.font-size-adjuster button:active {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--accent-color);
 }
 
 .nav-arrow-btn {
@@ -379,7 +415,7 @@ html {
 
 .page-number-badge {
   font-family: var(--font-title);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 600;
   letter-spacing: 0.05em;
   color: var(--text-muted);
@@ -406,6 +442,15 @@ html {
   border-left: 3px solid transparent;
   transition: opacity 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
   user-select: text;
+  text-align: justify;
+  text-justify: inter-word;
+  text-indent: 1.5em;
+}
+
+/* Special paragraphs shouldn't have indent */
+.book-content p.section-title,
+.book-content p.block-quote {
+  text-indent: 0;
 }
 
 /* Inactive Paragraph Fade */

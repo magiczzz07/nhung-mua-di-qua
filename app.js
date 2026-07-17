@@ -29,7 +29,9 @@ const chaptersList = document.getElementById('chapters-list');
 const progressBarBg = document.getElementById('progress-bar-bg');
 const progressBarFill = document.getElementById('progress-bar-fill');
 const currentTimeLabel = document.getElementById('current-time');
-const durationTimeLabel = document.getElementById('duration-time');
+const btnFontDec = document.getElementById('btn-font-dec');
+const btnFontInc = document.getElementById('btn-font-inc');
+let currentFontScale = parseFloat(localStorage.getItem('readerFontScale') || '1.15');
 
 // 1. Initialize Application & Fetch Book Data
 document.addEventListener('DOMContentLoaded', () => {
@@ -40,6 +42,9 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     .then(data => {
       bookData = data;
+      if (bookContentBox) {
+        bookContentBox.style.fontSize = currentFontScale + 'rem';
+      }
       buildSidebar();
       loadChapter(0); // Load Preface by default
       setupEventListeners();
@@ -333,6 +338,22 @@ function setupEventListeners() {
       playAudio();
     }
   });
+  
+  // Font Size Adjusters
+  if (btnFontDec) {
+    btnFontDec.addEventListener('click', () => {
+      currentFontScale = Math.max(0.85, currentFontScale - 0.05);
+      bookContentBox.style.fontSize = currentFontScale + 'rem';
+      localStorage.setItem('readerFontScale', currentFontScale);
+    });
+  }
+  if (btnFontInc) {
+    btnFontInc.addEventListener('click', () => {
+      currentFontScale = Math.min(1.65, currentFontScale + 0.05);
+      bookContentBox.style.fontSize = currentFontScale + 'rem';
+      localStorage.setItem('readerFontScale', currentFontScale);
+    });
+  }
   
   // Audio Player Progress and Completion
   audioPlayer.addEventListener('timeupdate', updateProgressBar);
