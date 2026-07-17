@@ -29,6 +29,7 @@ const chaptersList = document.getElementById('chapters-list');
 const progressBarBg = document.getElementById('progress-bar-bg');
 const progressBarFill = document.getElementById('progress-bar-fill');
 const currentTimeLabel = document.getElementById('current-time');
+const durationTimeLabel = document.getElementById('duration-time');
 const btnFontDec = document.getElementById('btn-font-dec');
 const btnFontInc = document.getElementById('btn-font-inc');
 let currentFontScale = parseFloat(localStorage.getItem('readerFontScale') || '1.15');
@@ -455,7 +456,6 @@ function setupEventListeners() {
   
   // Dynamic Voice Switching in Player
   const btnVoiceSwitch = document.getElementById('btn-voice-switch');
-  const activeVoiceLabel = document.getElementById('active-voice-label');
   if (btnVoiceSwitch) {
     btnVoiceSwitch.addEventListener('click', () => {
       const wasPlaying = isPlaying;
