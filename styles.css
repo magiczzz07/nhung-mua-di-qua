@@ -626,7 +626,11 @@ html {
 }
 
 .control-group.right {
-  justify-content: flex-end;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 6px;
 }
 
 /* Buttons */
@@ -661,12 +665,14 @@ html {
 
 .voice-btn {
   font-size: 0.75rem !important;
-  padding: 6px 10px !important;
+  padding: 6px 12px !important;
   background-color: rgba(255, 255, 255, 0.02) !important;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   white-space: nowrap;
+  min-width: 105px;
 }
 
 .voice-btn:active {
@@ -814,8 +820,11 @@ html {
     gap: 12px !important;
   }
   .control-group.right {
-    justify-content: flex-end;
-    gap: 6px !important;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 4px !important;
   }
   .player-btn {
     font-size: 1.1rem;
@@ -836,6 +845,7 @@ html {
   .voice-btn {
     font-size: 0.65rem !important;
     padding: 5px 6px !important;
+    min-width: 88px !important;
   }
   #btn-autoflip {
     font-size: 0.65rem !important;
