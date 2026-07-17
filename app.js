@@ -5,7 +5,7 @@ let currentPageNum = null; // Can be string like 'ii' or '5'
 let currentParagraphIdx = 0; // Relative to the active page
 let isPlaying = false;
 let autoFlip = localStorage.getItem('autoFlipActive') !== 'false';
-let activeVoice = localStorage.getItem('activeVoice') || 'thai_son'; // Can be 'ngoc_linh' or 'thai_son'
+let activeVoice = localStorage.getItem('activeVoice') || 'ngoc_linh'; // Can be 'ngoc_linh' or 'thuc_doan'
 
 // DOM Elements
 const audioPlayer = document.getElementById('audio-player');
@@ -194,7 +194,7 @@ function selectParagraph(idx, shouldPlay = false) {
   });
   
   // Setup Audio source
-  const audioKey = activeVoice === 'ngoc_linh' ? 'audio_ngoc_linh' : 'audio_thai_son';
+  const audioKey = activeVoice === 'ngoc_linh' ? 'audio_ngoc_linh' : 'audio_thuc_doan';
   const audioUrl = pData[audioKey];
   
   if (audioUrl) {
@@ -314,7 +314,7 @@ function setupEventListeners() {
   // Initialize Voice UI state
   const activeVoiceLabel = document.getElementById('active-voice-label');
   if (activeVoiceLabel) {
-    activeVoiceLabel.textContent = activeVoice === 'ngoc_linh' ? 'Ngọc Linh' : 'Thái Sơn';
+    activeVoiceLabel.textContent = activeVoice === 'ngoc_linh' ? 'Ngọc Linh' : 'Thục Đoan';
   }
 
   // Play / Pause Click
@@ -462,19 +462,19 @@ function setupEventListeners() {
       const savedTime = audioPlayer.currentTime;
       
       // Toggle state
-      activeVoice = activeVoice === 'ngoc_linh' ? 'thai_son' : 'ngoc_linh';
+      activeVoice = activeVoice === 'ngoc_linh' ? 'thuc_doan' : 'ngoc_linh';
       localStorage.setItem('activeVoice', activeVoice);
       
       // Update UI button text
       if (activeVoiceLabel) {
-        activeVoiceLabel.textContent = activeVoice === 'ngoc_linh' ? 'Ngọc Linh' : 'Thái Sơn';
+        activeVoiceLabel.textContent = activeVoice === 'ngoc_linh' ? 'Ngọc Linh' : 'Thục Đoan';
       }
       
       // Swap source dynamically for the current paragraph
       const pageParas = getPageParagraphs();
       const pData = pageParas[currentParagraphIdx];
       if (pData) {
-        const audioKey = activeVoice === 'ngoc_linh' ? 'audio_ngoc_linh' : 'audio_thai_son';
+        const audioKey = activeVoice === 'ngoc_linh' ? 'audio_ngoc_linh' : 'audio_thuc_doan';
         const audioUrl = pData[audioKey];
         
         if (audioUrl) {
