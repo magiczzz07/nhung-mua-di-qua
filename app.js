@@ -78,7 +78,7 @@ function buildSidebar() {
 }
 
 // 3. Load Chapter
-function loadChapter(chIdx) {
+function loadChapter(chIdx, shouldPlay = false) {
   currentChapterIdx = chIdx;
   const chapter = bookData.chapters[chIdx];
   headerChapterTitle.textContent = chapter.title;
@@ -97,7 +97,7 @@ function loadChapter(chIdx) {
   const pages = [...new Set(chapter.paragraphs.map(p => p.page))];
   
   // Load the first page of this chapter
-  loadPage(pages[0]);
+  loadPage(pages[0], shouldPlay);
 }
 
 // Get paragraphs belonging to the active page in the active chapter
@@ -107,7 +107,7 @@ function getPageParagraphs() {
 }
 
 // 4. Load Page Content
-function loadPage(pageNum) {
+function loadPage(pageNum, shouldPlay = false) {
   currentPageNum = pageNum;
   pageDisplay.textContent = `Trang ${pageNum}`;
   
@@ -146,7 +146,7 @@ function loadPage(pageNum) {
   updatePageNavButtons();
   
   // Update selection visually
-  selectParagraph(0, isPlaying);
+  selectParagraph(0, shouldPlay);
 }
 
 function updatePageNavButtons() {
@@ -240,15 +240,16 @@ function togglePlay() {
 }
 
 // 7. Navigation Flow: Auto-advance and Skip
-function playNextParagraph() {
+function playNextParagraph(forcePlay = false) {
   const pageParas = getPageParagraphs();
+  const shouldPlayNext = forcePlay || isPlaying;
   
   if (currentParagraphIdx < pageParas.length - 1) {
     // Standard skip within current page
-    selectParagraph(currentParagraphIdx + 1, isPlaying);
+    selectParagraph(currentParagraphIdx + 1, shouldPlayNext);
   } else {
     // End of page reached! Check if we can turn page
-    turnPageForward(isPlaying);
+    turnPageForward(shouldPlayNext);
   }
 }
 
@@ -268,11 +269,11 @@ function turnPageForward(shouldPlay = false) {
   
   if (pageIdx < pages.length - 1) {
     // Go to next page of current chapter
-    loadPage(pages[pageIdx + 1]);
+    loadPage(pages[pageIdx + 1], shouldPlay);
     if (shouldPlay) playAudio();
   } else if (currentChapterIdx < bookData.chapters.length - 1) {
     // Go to next chapter
-    loadChapter(currentChapterIdx + 1);
+    loadChapter(currentChapterIdx + 1, shouldPlay);
     if (shouldPlay) playAudio();
   } else {
     // Book finished!
@@ -288,7 +289,7 @@ function turnPageBackward(shouldPlay = false) {
   
   if (pageIdx > 0) {
     // Go to previous page of current chapter
-    loadPage(pages[pageIdx - 1]);
+    loadPage(pages[pageIdx - 1], shouldPlay);
     // Start at last paragraph of previous page
     selectParagraph(getPageParagraphs().length - 1, shouldPlay);
   } else if (currentChapterIdx > 0) {
@@ -301,7 +302,7 @@ function turnPageBackward(shouldPlay = false) {
     headerChapterTitle.textContent = prevChapter.title;
     
     // Load last page of previous chapter
-    loadPage(prevPages[prevPages.length - 1]);
+    loadPage(prevPages[prevPages.length - 1], shouldPlay);
     // Start at last paragraph
     selectParagraph(getPageParagraphs().length - 1, shouldPlay);
   }
@@ -376,7 +377,7 @@ function setupEventListeners() {
 
   audioPlayer.addEventListener('ended', () => {
     if (autoFlip) {
-      playNextParagraph();
+      playNextParagraph(true);
     }
   });
   
