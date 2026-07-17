@@ -455,8 +455,8 @@ html {
 
 /* Inactive Paragraph Fade */
 .book-content p.inactive {
-  opacity: 0.35;
-  color: var(--text-dimmed);
+  opacity: 1;
+  color: var(--text-main);
 }
 
 /* Active Paragraph Glow & Highlight */
