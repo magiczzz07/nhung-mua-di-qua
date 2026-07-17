@@ -4,7 +4,7 @@ let currentChapterIdx = 0;
 let currentPageNum = null; // Can be string like 'ii' or '5'
 let currentParagraphIdx = 0; // Relative to the active page
 let isPlaying = false;
-let autoFlip = true;
+let autoFlip = localStorage.getItem('autoFlipActive') !== 'false';
 let activeVoice = 'ngoc_linh'; // Can be 'ngoc_linh' or 'thai_son'
 
 // DOM Elements
@@ -321,9 +321,21 @@ function setupEventListeners() {
   btnNextPage.addEventListener('click', () => turnPageForward(isPlaying));
   btnPrevPage.addEventListener('click', () => turnPageBackward(isPlaying));
   
+  // Initialize Autoflip UI state
+  btnAutoflip.classList.toggle('active', autoFlip);
+  const initialAutoflipLabel = document.getElementById('autoflip-label');
+  if (initialAutoflipLabel) {
+    initialAutoflipLabel.textContent = autoFlip ? 'Tự đọc: Bật' : 'Tự đọc: Tắt';
+  }
+  const initialAutoflipIcon = btnAutoflip.querySelector('i');
+  if (initialAutoflipIcon) {
+    initialAutoflipIcon.className = autoFlip ? 'fa-solid fa-circle-play' : 'fa-solid fa-circle-stop';
+  }
+
   // Auto-flip Toggle
   btnAutoflip.addEventListener('click', () => {
     autoFlip = !autoFlip;
+    localStorage.setItem('autoFlipActive', autoFlip);
     btnAutoflip.classList.toggle('active', autoFlip);
     const label = document.getElementById('autoflip-label');
     if (label) {
