@@ -5,7 +5,7 @@ let currentPageNum = null; // Can be string like 'ii' or '5'
 let currentParagraphIdx = 0; // Relative to the active page
 let isPlaying = false;
 let autoFlip = localStorage.getItem('autoFlipActive') !== 'false';
-let activeVoice = 'ngoc_linh'; // Can be 'ngoc_linh' or 'thai_son'
+let activeVoice = localStorage.getItem('activeVoice') || 'thai_son'; // Can be 'ngoc_linh' or 'thai_son'
 
 // DOM Elements
 const audioPlayer = document.getElementById('audio-player');
@@ -310,6 +310,12 @@ function turnPageBackward(shouldPlay = false) {
 
 // 8. Event Listeners Config
 function setupEventListeners() {
+  // Initialize Voice UI state
+  const activeVoiceLabel = document.getElementById('active-voice-label');
+  if (activeVoiceLabel) {
+    activeVoiceLabel.textContent = activeVoice === 'ngoc_linh' ? 'Ngọc Linh' : 'Thái Sơn';
+  }
+
   // Play / Pause Click
   btnPlayPause.addEventListener('click', togglePlay);
   
@@ -457,6 +463,7 @@ function setupEventListeners() {
       
       // Toggle state
       activeVoice = activeVoice === 'ngoc_linh' ? 'thai_son' : 'ngoc_linh';
+      localStorage.setItem('activeVoice', activeVoice);
       
       // Update UI button text
       if (activeVoiceLabel) {
