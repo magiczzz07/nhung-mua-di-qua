@@ -319,6 +319,19 @@ function setupEventListeners() {
   btnAutoflip.addEventListener('click', () => {
     autoFlip = !autoFlip;
     btnAutoflip.classList.toggle('active', autoFlip);
+    const label = document.getElementById('autoflip-label');
+    if (label) {
+      label.textContent = autoFlip ? 'Tự đọc: Bật' : 'Tự đọc: Tắt';
+    }
+    const icon = btnAutoflip.querySelector('i');
+    if (icon) {
+      icon.className = autoFlip ? 'fa-solid fa-circle-play' : 'fa-solid fa-circle-stop';
+    }
+    
+    // Start reading immediately if toggled on and not currently playing
+    if (autoFlip && !isPlaying) {
+      playAudio();
+    }
   });
   
   // Audio Player Progress and Completion

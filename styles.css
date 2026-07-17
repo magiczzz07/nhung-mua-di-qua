@@ -341,8 +341,15 @@ html {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 24px;
-  padding-bottom: 8px;
+  padding: 12px 16px;
   border-bottom: 1px dashed var(--border-glass);
+  position: sticky;
+  top: -16px;
+  z-index: 5;
+  background-color: var(--bg-primary);
+  margin-left: -16px;
+  margin-right: -16px;
+  transition: background-color 0.4s ease;
 }
 
 .nav-arrow-btn {
@@ -730,4 +737,67 @@ html {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--text-muted);
+}
+
+/* Mobile Responsiveness & Size Optimization */
+@media (max-width: 600px) {
+  /* Scale down player controls for mobile viewports */
+  .player-controls-bar {
+    padding: 8px 10px;
+    height: 112px;
+  }
+  .progress-container {
+    gap: 8px;
+  }
+  .controls-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 4px;
+    width: 100%;
+  }
+  .control-group {
+    flex-basis: auto !important;
+    flex-grow: 0;
+    flex-shrink: 0;
+  }
+  .control-group.left {
+    justify-content: flex-start;
+  }
+  .control-group.center {
+    justify-content: center;
+    gap: 12px !important;
+  }
+  .control-group.right {
+    justify-content: flex-end;
+    gap: 6px !important;
+  }
+  .player-btn {
+    font-size: 1.1rem;
+  }
+  .player-btn.secondary {
+    width: 38px;
+    height: 38px;
+  }
+  .player-btn.primary {
+    width: 48px;
+    height: 48px;
+  }
+  .player-btn.text-btn {
+    font-size: 0.7rem;
+    padding: 5px 8px;
+    border-radius: 12px;
+  }
+  .voice-btn {
+    font-size: 0.65rem !important;
+    padding: 5px 6px !important;
+  }
+  #btn-autoflip {
+    font-size: 0.65rem !important;
+    width: auto !important;
+    height: auto !important;
+  }
+  .speed-menu {
+    bottom: 48px;
+  }
 }
